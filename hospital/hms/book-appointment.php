@@ -12,14 +12,41 @@ $doctorid=$_POST['doctor'];
 $userid=$_SESSION['id'];
 $fees=$_POST['fees'];
 $appdate=$_POST['appdate'];
-$time=$_POST['apptime'];
+$time= date("H:i", strtotime($_POST['apptime'])); 
 $userstatus=1;
 $docstatus=1;
-$query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
+
+date_default_timezone_set('Asia/Colombo');
+
+$start_time = date("H:00:00", strtotime($_POST['apptime']));// Current hour, 0 minute, [0 second]
+$end_time = date("H:59:59", strtotime($_POST['apptime']));
+$current_date = date("Y-m-d", strtotime($_POST['appdate']));
+$app_count = 0;
+
+ $sql=mysqli_query($con,"SELECT COUNT(id) as app_count FROM appointment WHERE doctorId = ".$doctorid." AND appointmentDate = '".$current_date."' AND (appointmentTime >= '".$start_time."' AND appointmentTime <= '".$end_time."')");
+ while($row=mysqli_fetch_array($sql))
+ {
+	$app_count = $row['app_count'];
+ }
+
+
+
+ if($app_count > 15)
+ {
+	echo "<script>alert('Your appointment exceeded the limit for the hour');</script>";
+ }
+
+ else
+ {
+	$query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
 	if($query)
 	{
 		echo "<script>alert('Your appointment successfully booked');</script>";
 	}
+ }
+
+
+
 
 }
 ?>
