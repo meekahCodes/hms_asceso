@@ -184,6 +184,11 @@
 											<span class="title">B/w dates reports </span>
 										</a>
 									</li>
+									<li>
+										<a href="patient-invoice-report.php">
+											<span class="title">Patient reports </span>
+										</a>
+									</li>
 
 									
 									
