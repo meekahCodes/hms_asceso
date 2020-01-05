@@ -36,8 +36,9 @@
   {
     echo $get_appointmentId = $_GET['appointmentId'];
     echo $get_consulty_fees = $_GET['consulty_fees'];
+    echo $get_patientId = $_GET['patientId'];
   }
-  $query_hotel = "SELECT SUM(appointment.consultancyFees) AS consulty_fees, appointment.* FROM appointment WHERE id = {get_appointmentId} GROUP BY doctorId ";
+  $query_hotel = "SELECT * FROM tblpatient AS P JOIN appointment AS A ON A.patientId = P.ID JOIN doctors AS D ON D.id = A.doctorId  ";
   $result_hotel = mysqli_query($con, $query_hotel);
   while($row = mysqli_fetch_assoc($result_hotel))
   {

@@ -7,6 +7,7 @@ check_login();
 
 if(isset($_POST['submit']))
 {
+$patientId = $_POST['patientId'];
 $specilization=$_POST['Doctorspecialization'];
 $doctorid=$_POST['doctor'];
 $userid=$_SESSION['id'];
@@ -38,7 +39,7 @@ $app_count = 0;
 
  else
  {
-	$query=mysqli_query($con,"insert into appointment(doctorSpecialization,doctorId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$specilization','$doctorid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
+	$query=mysqli_query($con,"insert into appointment(patientId,doctorSpecialization,doctorId,userId,consultancyFees,appointmentDate,appointmentTime,userStatus,doctorStatus) values('$patientId','$specilization','$doctorid','$userid','$fees','$appdate','$time','$userstatus','$docstatus')");
 	if($query)
 	{
 		echo "<script>alert('Your appointment successfully booked');</script>";
@@ -143,6 +144,26 @@ function getfee(val) {
 													<form role="form" name="book" method="post" >
 														
 
+<div class="form-group">
+<labe for="patient">Patient</label><br>
+	<select name="patientId" id="patientId" class="form-control">
+		<option value="">Choose Patient.....</option>
+		<?php
+			$query_patient = "SELECT * FROM tblpatient";
+			$result_patient = mysqli_query($con,$query_patient);
+			if(!$result_patient){
+				die("Insert Query Failed " . mysqli_error($con)); 
+			}
+			while ($row = mysqli_fetch_assoc($result_patient)) {
+				$patientId = $row['ID'];
+				$patientName = $row['PatientName'];
+
+				echo "<option value='$patientId'>{$patientName}</option>";  
+			}
+		?>
+	</select>
+</div>
+
 
 <div class="form-group">
 															<label for="DoctorSpecialization">
@@ -162,6 +183,8 @@ while($row=mysqli_fetch_array($ret))
 															</select>
 														</div>
 
+														
+
 
 
 
@@ -174,6 +197,8 @@ while($row=mysqli_fetch_array($ret))
 						</select>
 														</div>
 
+
+														
 
 
 

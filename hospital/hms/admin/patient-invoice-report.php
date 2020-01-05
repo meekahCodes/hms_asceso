@@ -75,6 +75,7 @@ if(isset($_GET['del']))
 												<th>Appointment id</th>
 												<th>Doctor specializion</th>
 												<th>Doctor id</th>
+												<th>Patient id</th>
 												<th>user id </th>
 												<th>concultency id</th>
 												<th>Appointment date</th>
@@ -100,6 +101,7 @@ while($row=mysqli_fetch_array($sql))
 												<td><?php echo $row['id'];?></td>
 												<td><?php echo $row['doctorSpecialization'];?></td>
 												<td><?php echo $row['doctorId'];?></td>
+												<td><?php echo $row['patientId'];?></td>
 												<td><?php echo $row['userId'];?></td>
 												<td><?php echo $row['consultancyFees'];?></td>
 												<td><?php echo $row['appointmentDate'];?></td>
@@ -109,7 +111,7 @@ while($row=mysqli_fetch_array($sql))
 												<td><?php echo $row['doctorStatus'];?></td>
 												<td><?php echo $row['updationDate'];?></td>
 												<td><?php 
-echo "<td><a class='btn btn-sm btn-warning' target='_blank' href='../invoice/template.php?appointmentId={$row['id']}&consulty_fees={$row['consulty_fees']}'>Print Invoice</a></td>";
+echo "<td><a class='btn btn-sm btn-warning' target='_blank' href='../invoice/template.php?appointmentId={$row['id']}&consulty_fees={$row['consulty_fees']}&patientId={$row['patientId']}'>Print Invoice</a></td>";
 												?></td>
 											</tr>	
 											
